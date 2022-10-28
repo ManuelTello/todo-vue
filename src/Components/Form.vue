@@ -1,24 +1,22 @@
 <template>
     <form @submit="HandleSubmit">
-        <input type="text" placeholder="Something" v-model="task" />
-        <input type="submit" value="Add" />
+        <input type="text" placeholder="Task" v-model="task" required />
+        <input type="text" placeholder="Category" v-model="category" required />
+        <input type="submit" value="Add" class="btn btn-primary" />
     </form>
 </template>
 
 <script>
-import Delete from "./Delete.vue";
-
 export default {
     name: "Form",
-    props: {
-        index: Number
-    },
+    props: ["index"],
     methods: {
         HandleSubmit(e) {
             e.preventDefault();
             const new_task = {
                 id: this.index + 1,
                 task: this.task,
+                category: this.category,
                 timestamp: new Date()
             }
             this.$emit("AddTaskEvent", new_task);
@@ -26,7 +24,8 @@ export default {
     },
     data() {
         return {
-            task: ""
+            task: "",
+            category: ""
         }
     }
 }

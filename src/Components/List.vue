@@ -1,25 +1,36 @@
 <template>
+    <form @submit="HandleFilter">
+    </form>
     <section v-for="t in tasklist_prop">
-        <h4><i>{{t.id}}</i> - {{t.task}}</h4>
-        <h5>{{t.timestamp}}</h5>
-        <Delete></Delete>
+        <h4><i>{{ t.id }}</i> - {{ t.task }}</h4>
+        <h3>Category: {{ t.category }}</h3>
+        <h5>{{ t.timestamp }}</h5>
+        <button @click="HandleDelete(t.id)" class="btn btn-danger">Delete</button>
     </section>
 </template>
 
 <script>
-import Delete from "./Delete.vue";
-
 export default {
     name: "List",
-    props: {
-        tasklist_prop: Array
+    components: {},
+    emits: {
+        click: null,
+        EventDeleteTask: ({ id }) => true
     },
+    props: ["tasklist_prop"],
     data() {
         return {
             list: this.tasklist_prop
         };
     },
-    components: { Delete }
+    methods: {
+        HandleDelete(id) {
+            this.$emit("EventDeleteTask", id);
+        },
+        HandleFilter(e) {
+            e.preventDefault();
+        }
+    }
 }
 </script>
 
